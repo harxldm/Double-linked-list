@@ -4,70 +4,65 @@
  */
 package SimplementeEnlazada;
 
-/**
- *
- * @author harxl
- */
 import java.util.Iterator;
 
 /**
  *
- * @author sala5
+ * @author harxl
  */
-public class stack<Item> implements Iterable<Item> {
+public class queue<Item> implements Iterable <Item> {
+    
     private Node first;
+    private Node last;
     private int count;
-    
-    public stack() {
-        first = null;
-        count = 0;
-    }
 
-    
-    private class Node {
+    private class Node{
         Item item;
         Node next;
     }
-    
-    public void push(Item item) {
-        Node oldfirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldfirst;
+   
+    public void enqueue(Item item){
+        Node oldlast = last;
+        last = new Node() ;
+        last.item = item;
+        oldlast.next = last;
+        count++;
+        if(isEmpty())
+            first = last;
         count++;
     }
     
-    public Item pop() {
+    public Item dequeue(){
         Item item = first.item;
         first.item = null;
-        first = first.next;
+        first = first.next ;
         count--;
+        if(isEmpty())
+            last = null;
         return item;
+        
     }
     
-    public Item peak() {
-        return first.item;
-    }
-    
-    public boolean isEmpty() {
+    public boolean isEmpty(){
         return first == null;
+        //return count = 0;
     }
     
-    public int size() {
-        return count;
+    public int size(){
+        return count ;
     }
     
-    @Override
-    public Iterator<Item> iterator() {
-        return new LinkedListIterator();
-    }
-    
-    private class LinkedListIterator implements Iterator<Item> {
+        @Override
+     public Iterator<Item> iterator() {
+        return new LinkedListIterator ();  
+     }
+    private class LinkedListIterator implements Iterator<Item>{
         
         private Node current = first;
+
         @Override
         public boolean hasNext() {
-            return current != null;
+             return current != null;
         }
 
         @Override
@@ -78,6 +73,4 @@ public class stack<Item> implements Iterable<Item> {
         }
         
     }
-    
 }
-
